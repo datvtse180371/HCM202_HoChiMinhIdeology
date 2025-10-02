@@ -6,6 +6,7 @@ import Footer from './components/Footer.jsx'
 import ProgressBar from './components/ProgressBar.jsx'
 import TOC from './components/TOC.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
+import ChatBox from './components/ChatBox.jsx';
 
 const Section = ({ id, title, media, children, flip }) => {
   const ref = useRef(null)
@@ -282,6 +283,8 @@ function App() {
           </div>
         </div>
       </main>
+
+          <ChatBox />
 
       <Footer />
     </LazyMotion>
