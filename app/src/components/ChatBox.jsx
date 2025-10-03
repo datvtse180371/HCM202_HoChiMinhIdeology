@@ -8,10 +8,30 @@ export default function ChatBox() {
     const [sending, setSending] = useState(false);
     const [collapsed, setCollapsed] = useState(false);
     const listRef = useRef(null);
+    const textareaRef = useRef(null);
+
+    // autoscroll when messages change
+    useEffect(() => {
+        if (!listRef.current) return
+        // small timeout to allow DOM update
+        const t = setTimeout(() => {
+            listRef.current.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' })
+        }, 50)
+        return () => clearTimeout(t)
+    }, [messages])
+
+    // auto-resize textarea
+    const resizeTextarea = () => {
+        const ta = textareaRef.current
+        if (!ta) return
+        ta.style.height = 'auto'
+        const max = 160 // px
+        ta.style.height = Math.min(ta.scrollHeight, max) + 'px'
+    }
 
     useEffect(() => {
-        if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
-    }, [messages, collapsed]);
+        resizeTextarea()
+    }, [input])
 
     async function send() {
         const text = input.trim();
@@ -36,19 +56,29 @@ export default function ChatBox() {
     }
 
     return (
-        <div className={`chatbox chatbox--${collapsed ? 'collapsed' : 'open'}`} role="region" aria-label="AI Chat" >
-            <div className="chatbox__header">
-                {!collapsed && <div className="chatbox__title">AI Chat</div>}
-                <div className="chatbox__actions">
-                    <button className="btn btn--ghost btn--inline" onClick={() => setCollapsed(c => !c)} aria-pressed={collapsed} title={collapsed ? 'Mở chat' : 'Thu gọn'}>
-                        {collapsed ? 'AI Chat' : 'Thu gọn'}
-                    </button>
+        <>
+            {collapsed ? (
+                <div className="chatbox-toggle" role="button" tabIndex={0} onClick={() => setCollapsed(false)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setCollapsed(false) }} aria-label="Mở chat" title="Mở chat">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                        <path d="M12 3C7.03 3 3 6.58 3 11C3 13.04 3.87 15 5.3 16.46L4 21L8.73 19.6C10.05 20.36 11.49 20.77 13 20.77C17.97 20.77 22 17.19 22 12.77C22 8.35 17.97 3 12 3Z" fill="currentColor"/>
+                    </svg>
                 </div>
-            </div>
+            ) : (
+                <div className={`chatbox chatbox--open`} role="region" aria-label="AI Chat" >
+                    <div className="chatbox__header">
+                        <div className="chatbox__title">AI Chat</div>
+                        <div className="chatbox__actions">
+                            <button
+                                className="btn btn--ghost btn--inline"
+                                onClick={() => setCollapsed(true)}
+                                aria-label="Thu gọn chat"
+                            >
+                                Thu gọn
+                            </button>
+                        </div>
+                    </div>
 
-            {!collapsed && (
-                <>
-                    <div className="chatbox__list" ref={listRef}>
+                    <div className="chatbox__list" ref={listRef} role="log" aria-live="polite">
                         {messages.map((m, i) => (
                             <div key={i} className={`chatbox__message ${m.sender === 'user' ? 'is-user' : 'is-bot'}`}>
                                 <div className="chatbox__bubble">
@@ -61,21 +91,23 @@ export default function ChatBox() {
 
                     <div className="chatbox__composer">
                         <textarea
+                            ref={textareaRef}
                             value={input}
                             onChange={e => setInput(e.target.value)}
                             onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}
                             placeholder="Hỏi một câu về nội dung chương... (Shift+Enter xuống dòng)"
                             rows={2}
                             className="chatbox__input"
+                            aria-label="Nhập câu hỏi"
                         />
                         <div className="chatbox__controls">
-                            <button className="btn btn--primary" onClick={send} disabled={sending || !input.trim()}>
+                            <button className="btn btn--primary" onClick={send} disabled={sending || !input.trim()} aria-label="Gửi tin nhắn">
                                 {sending ? 'Đang gửi...' : 'Gửi'}
                             </button>
                         </div>
                     </div>
-                </>
+                </div>
             )}
-        </div>
+        </>
     );
 }

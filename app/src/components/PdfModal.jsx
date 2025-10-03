@@ -59,7 +59,6 @@ export default function PdfModal({ pdfPath, triggerText = 'Xem tài liệu (PDF)
         type="button"
         className={`btn btn--ghost ${compact ? 'btn--inline' : 'btn--small'}`}
         onClick={(e) => { e.stopPropagation(); setOpen(true) }}
-        style={{ marginLeft: 12 }}
         title={tooltip || triggerText}
         aria-label={tooltip || triggerText}
       >
