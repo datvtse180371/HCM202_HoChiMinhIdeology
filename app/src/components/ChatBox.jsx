@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 
 export default function ChatBox() {
     const [messages, setMessages] = useState([
@@ -6,6 +6,12 @@ export default function ChatBox() {
     ]);
     const [input, setInput] = useState("");
     const [sending, setSending] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
+    const listRef = useRef(null);
+
+    useEffect(() => {
+        if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
+    }, [messages, collapsed]);
 
     async function send() {
         const text = input.trim();
@@ -30,44 +36,46 @@ export default function ChatBox() {
     }
 
     return (
-        <div
-            className="chatbox"
-            style={{
-                border: "1px solid #ddd",
-                padding: 12,
-                borderRadius: 8,
-                width: 1200,            
-                margin: "20px auto"    
-            }}
-        >
-            <div
-                style={{
-                    height: 300,       
-                    overflow: "auto",
-                    marginBottom: 8
-                }}
-            >
-                {messages.map((m, i) => (
-                    <div key={i} style={{ margin: "6px 0" }}>
-                        <strong style={{ color: m.sender === "user" ? "#0a66ff" : "#111" }}>
-                            {m.sender === "user" ? "Bạn" : "Bot"}
-                        </strong>
-                        <div>{m.text}</div>
-                    </div>
-                ))}
+        <div className={`chatbox chatbox--${collapsed ? 'collapsed' : 'open'}`} role="region" aria-label="AI Chat" >
+            <div className="chatbox__header">
+                {!collapsed && <div className="chatbox__title">AI Chat</div>}
+                <div className="chatbox__actions">
+                    <button className="btn btn--ghost btn--inline" onClick={() => setCollapsed(c => !c)} aria-pressed={collapsed} title={collapsed ? 'Mở chat' : 'Thu gọn'}>
+                        {collapsed ? 'AI Chat' : 'Thu gọn'}
+                    </button>
+                </div>
             </div>
 
-            <div style={{ display: "flex", gap: 8 }}>
-                <input
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    onKeyDown={e => e.key === "Enter" && send()}
-                    style={{ flex: 1 }}
-                />
-                <button onClick={send} disabled={sending || !input.trim()}>
-                    {sending ? "..." : "Gửi"}
-                </button>
-            </div>
+            {!collapsed && (
+                <>
+                    <div className="chatbox__list" ref={listRef}>
+                        {messages.map((m, i) => (
+                            <div key={i} className={`chatbox__message ${m.sender === 'user' ? 'is-user' : 'is-bot'}`}>
+                                <div className="chatbox__bubble">
+                                    <div className="chatbox__sender">{m.sender === 'user' ? 'Bạn' : 'Bot'}</div>
+                                    <div className="chatbox__text">{m.text}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="chatbox__composer">
+                        <textarea
+                            value={input}
+                            onChange={e => setInput(e.target.value)}
+                            onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}
+                            placeholder="Hỏi một câu về nội dung chương... (Shift+Enter xuống dòng)"
+                            rows={2}
+                            className="chatbox__input"
+                        />
+                        <div className="chatbox__controls">
+                            <button className="btn btn--primary" onClick={send} disabled={sending || !input.trim()}>
+                                {sending ? 'Đang gửi...' : 'Gửi'}
+                            </button>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

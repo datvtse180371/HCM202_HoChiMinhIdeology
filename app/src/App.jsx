@@ -7,6 +7,7 @@ import ProgressBar from './components/ProgressBar.jsx'
 import TOC from './components/TOC.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import ChatBox from './components/ChatBox.jsx';
+import PdfModal from './components/PdfModal.jsx'
 
 const Section = ({ id, title, media, children, flip }) => {
   const ref = useRef(null)
@@ -199,13 +200,26 @@ function App() {
             </Section>
 
             <Section id="s311" title="3.1.1. Vấn đề Độc lập dân tộc" media="/assets/sec_311_quote.jpg" flip>
-              <StaggerList items={[
-                'Độc lập, tự do là quyền thiêng liêng, bất khả xâm phạm của mọi dân tộc; là khát vọng cháy bỏng của nhân dân Việt Nam. “Không có gì quý hơn độc lập, tự do”.',
-                'Nền tảng hình thành: truyền thống yêu nước; tiếp cận quyền dân tộc từ quyền con người (trích Tuyên ngôn 1776 Hoa Kỳ; Tuyên ngôn Nhân quyền và Dân quyền 1791).',
-                'Quá trình phát triển tư tưởng: Yêu sách 1919; Cương lĩnh 1930 (độc lập, tự do); 1941 đặt quyền lợi dân tộc “cao hơn hết thảy”; Tuyên ngôn độc lập 2/9/1945; kháng chiến chống Pháp, Mỹ.',
-                'Độc lập phải là độc lập thực sự, toàn diện và triệt để (chính trị, kinh tế, quân sự, ngoại giao), gắn với thống nhất và toàn vẹn lãnh thổ.',
-                'Độc lập gắn với tự do, cơm no, áo ấm, hạnh phúc của nhân dân: “Nước độc lập mà dân không hưởng hạnh phúc, tự do, thì độc lập cũng chẳng có nghĩa lý gì”。'
-              ]} />
+              <motion.ul className="list--stagger" initial="hidden" whileInView="show" viewport={{ amount: 0.3, once: true }} variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}>
+                <motion.li variants={{ hidden: { opacity: 0, y: 15, x: -10 }, show: { opacity: 1, y: 0, x: 0 } }} transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }} whileHover={{ x: 5 }}>Độc lập, tự do là quyền thiêng liêng, bất khả xâm phạm của mọi dân tộc; là khát vọng cháy bỏng của nhân dân Việt Nam. “Không có gì quý hơn độc lập, tự do”.</motion.li>
+                <motion.li variants={{ hidden: { opacity: 0, y: 15, x: -10 }, show: { opacity: 1, y: 0, x: 0 } }} transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }} whileHover={{ x: 5 }}>
+                  Nền tảng hình thành: truyền thống yêu nước; tiếp cận quyền dân tộc từ quyền con người (trích Tuyên ngôn 1776 Hoa Kỳ; Tuyên ngôn Nhân quyền và Dân quyền 1791).
+                  <span className="pdf-buttons">
+                    <PdfModal pdfPath="/assets/In%20Congress.pdf" triggerText="Tuyên ngôn 1776" title="Tuyên ngôn độc lập Hoa Kì 1776" compact />
+                    <PdfModal pdfPath="/assets/The%20representatives%20of%20the%20French%20People.pdf" triggerText="Tuyên ngôn 1791" title="Tuyên ngôn Dân quyền và Nhân quyền 1791" compact />
+                  </span>
+                </motion.li>
+                <motion.li variants={{ hidden: { opacity: 0, y: 15, x: -10 }, show: { opacity: 1, y: 0, x: 0 } }} transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }} whileHover={{ x: 5 }}>
+                  Quá trình phát triển tư tưởng: Yêu sách 1919; Cương lĩnh 1930 (độc lập, tự do); 1941 đặt quyền lợi dân tộc “cao hơn hết thảy”; Tuyên ngôn độc lập 2/9/1945; kháng chiến chống Pháp, Mỹ.
+                  <span className="pdf-buttons">
+                    <PdfModal pdfPath="/assets/Vexay.pdf" triggerText="Véc-xây 1919" title="Yêu sách gửi Hội nghị Véc-xây 1919" compact />
+                    <PdfModal pdfPath="/assets/FirstProgression.pdf" triggerText="Cương lĩnh 1930" title="Cương lĩnh chính trị đầu tiên 1930" compact />
+                    <PdfModal pdfPath="/assets/FirstDeclaration.pdf" triggerText="Tuyên ngôn 1945" title="Tuyên ngôn độc lập 1945" compact />
+                  </span>
+                </motion.li>
+                <motion.li variants={{ hidden: { opacity: 0, y: 15, x: -10 }, show: { opacity: 1, y: 0, x: 0 } }} transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }} whileHover={{ x: 5 }}>Độc lập phải là độc lập thực sự, toàn diện và triệt để (chính trị, kinh tế, quân sự, ngoại giao), gắn với thống nhất và toàn vẹn lãnh thổ.</motion.li>
+                <motion.li variants={{ hidden: { opacity: 0, y: 15, x: -10 }, show: { opacity: 1, y: 0, x: 0 } }} transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }} whileHover={{ x: 5 }}>Độc lập gắn với tự do, cơm no, áo ấm, hạnh phúc của nhân dân: “Nước độc lập mà dân không hưởng hạnh phúc, tự do, thì độc lập cũng chẳng có nghĩa lý gì”。</motion.li>
+              </motion.ul>
               <p className="callout">Trích dẫn: HCM Toàn tập, t.3 tr.555; t.4 tr.4, 480, 496; t.12. (Tài liệu lớp)</p>
             </Section>
 
@@ -217,7 +231,13 @@ function App() {
                 'Phương pháp: bạo lực cách mạng của quần chúng, kết hợp đấu tranh chính trị và vũ trang; “dùng bạo lực cách mạng chống lại bạo lực phản cách mạng”.',
                 'Mục tiêu chiến lược: độc lập dân tộc gắn liền với chủ nghĩa xã hội.'
               ]} />
-              <p className="callout">Trích dẫn: HCM Toàn tập t.2, t.3, t.10–12; Đường Cách mệnh; Lênin về vấn đề dân tộc và thuộc địa. (Tài liệu lớp)</p>
+              <p className="callout">Trích dẫn: HCM Toàn tập t.2, t.3, t.10–12; Đường Cách mệnh; Lênin về vấn đề dân tộc và thuộc địa. (Tài liệu lớp)
+                <span className="pdf-buttons">
+                  <PdfModal pdfPath="/assets/duong-kach-menh_992022132635.pdf" triggerText="Đường Cách mệnh" title="Đường Cách mệnh" compact />
+                  {/* Local file path provided by user (not inside public/) — recommend copying this file into public/assets for proper serving */}
+                  <PdfModal pdfPath="/assets/vandedantoc.pdf" triggerText="Vấn đề dân tộc" title="Vấn đề dân tộc và thuộc địa" compact />
+                </span>
+              </p>
             </Section>
 
             <Section id="s32" title="3.2. Tư tưởng về CNXH và xây dựng CNXH ở Việt Nam" media="/assets/sec_32_people.jpg" flip>

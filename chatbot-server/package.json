@@ -18,5 +18,9 @@
   },
   "devDependencies": {
     "eslint": "^9.36.0"
-  }
+  },
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
