@@ -49,7 +49,8 @@ const Section = ({ id, title, media, children, flip }) => {
           decoding="async"
           variants={reduceMotion ? {} : imageVariants}
           initial={reduceMotion ? { opacity: 1 } : "hidden"}
-          animate={reduceMotion ? { opacity: 1 } : (inView ? "visible" : "hidden")}
+          /* animate to visible by default so images don't stay hidden if inView fails */
+          animate={reduceMotion ? { opacity: 1 } : "visible"}
           transition={{ duration: 0.4, ease: "easeOut" }}
         />
       </motion.figure>
@@ -176,8 +177,21 @@ function App() {
             <Section id="s311" title="3.1.1. Vấn đề độc lập dân tộc" media="/assets/sec_311_quote.jpg" flip>
               <StaggerList items={[
                 'Độc lập, tự do là quyền thiêng liêng, bất khả xâm phạm của mọi dân tộc; là khát vọng cháy bỏng của nhân dân Việt Nam. "Không có gì quý hơn độc lập, tự do".',
-                'Nền tảng hình thành: truyền thống yêu nước; tiếp cận quyền dân tộc từ quyền con người (trích Tuyên ngôn 1776 Hoa Kỳ; Tuyên ngôn Nhân quyền và Dân quyền 1791).',
-                'Quá trình phát triển tư tưởng: Yêu sách 1919; Cương lĩnh 1930 (độc lập, tự do); 1941 đặt quyền lợi dân tộc "cao hơn hết thảy"; Tuyên ngôn độc lập 2/9/1945; kháng chiến chống Pháp, Mỹ.',
+                <>
+                  Nền tảng hình thành: truyền thống yêu nước; tiếp cận quyền dân tộc từ quyền con người (trích Tuyên ngôn 1776 Hoa Kỳ; Tuyên ngôn Nhân quyền và Dân quyền 1791).
+                  <span className="pdf-buttons" style={{ marginLeft: 8 }}>
+                    <PdfModal pdfPath="/assets/In%20Congress.pdf" triggerText="Tuyên ngôn Hoa Kỳ" title="Tuyên ngôn độc lập Hoa Kì 1776" compact />
+                    <PdfModal pdfPath="/assets/The%20representatives%20of%20the%20French%20People.pdf" triggerText="Tuyên ngôn Nhân quyền" title="Tuyên ngôn Nhân quyền và Dân quyền 1791" compact />
+                  </span>
+                </>,
+                <>
+                  Quá trình phát triển tư tưởng: Yêu sách 1919; Cương lĩnh 1930 (độc lập, tự do); 1941 đặt quyền lợi dân tộc "cao hơn hết thảy"; Tuyên ngôn độc lập 2/9/1945; kháng chiến chống Pháp, Mỹ.
+                  <span className="pdf-buttons" style={{ marginLeft: 8 }}>
+                    <PdfModal pdfPath="/assets/Vexay.pdf" triggerText="Yêu sách Véc-xây 1919" title="Yêu sách Véc-xây 1919" compact />
+                    <PdfModal pdfPath="/assets/FirstProgression.pdf" triggerText="Cương lĩnh 1930" title="Cương lĩnh chính trị 1930" compact />
+                    <PdfModal pdfPath="/assets/FirstDeclaration.pdf" triggerText="Tuyên ngôn 1945" title="Tuyên ngôn độc lập 1945" compact />
+                  </span>
+                </>,
                 'Độc lập phải là độc lập thực sự, toàn diện và triệt để (chính trị, kinh tế, quân sự, ngoại giao), gắn với thống nhất và toàn vẹn lãnh thổ.',
                 'Độc lập gắn với tự do, cơm no, áo ấm, hạnh phúc của nhân dân: "Nước độc lập mà dân không hưởng hạnh phúc, tự do, thì độc lập cũng chẳng có nghĩa lý gì".'
               ]} />
