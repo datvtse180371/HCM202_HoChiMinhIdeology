@@ -12,6 +12,7 @@ export default function Header(){
   const [active, setActive] = useState(items[0].id)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileView, setIsMobileView] = useState(false)
 
   useEffect(()=>{
     const obs = new IntersectionObserver((entries)=>{
@@ -27,6 +28,19 @@ export default function Header(){
     window.addEventListener('scroll', onScroll, { passive: true })
     return ()=> window.removeEventListener('scroll', onScroll)
   },[])
+
+  // detect mobile viewport and update state
+  useEffect(() => {
+    const check = () => setIsMobileView(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // close mobile menu when switching to desktop
+  useEffect(() => {
+    if (!isMobileView) setIsMobileMenuOpen(false)
+  }, [isMobileView])
 
   const go = (id)=>{
     const el = document.getElementById(id)

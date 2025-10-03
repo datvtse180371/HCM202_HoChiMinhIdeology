@@ -6,6 +6,8 @@ import Footer from './components/Footer.jsx'
 import ProgressBar from './components/ProgressBar.jsx'
 import TOC from './components/TOC.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
+import ChatBox from './components/ChatBox.jsx';
+import PdfModal from './components/PdfModal.jsx'
 
 // Memoized Section component for better performance
 const Section = ({ id, title, media, children, flip }) => {
@@ -190,7 +192,13 @@ function App() {
                 'Phương pháp: bạo lực cách mạng của quần chúng, kết hợp đấu tranh chính trị và vũ trang; "dùng bạo lực cách mạng chống lại bạo lực phản cách mạng".',
                 'Mục tiêu chiến lược: độc lập dân tộc gắn liền với chủ nghĩa xã hội.'
               ]} />
-              <p className="callout">Trích dẫn: HCM Toàn tập t.2, t.3, t.10–12; Đường Cách mệnh; Lênin về vấn đề dân tộc và thuộc địa. (Tài liệu lớp)</p>
+              <p className="callout">Trích dẫn: HCM Toàn tập t.2, t.3, t.10–12; Đường Cách mệnh; Lênin về vấn đề dân tộc và thuộc địa. (Tài liệu lớp)
+                <span className="pdf-buttons">
+                  <PdfModal pdfPath="/assets/duong-kach-menh_992022132635.pdf" triggerText="Đường Cách mệnh" title="Đường Cách mệnh" compact />
+                  {/* Local file path provided by user (not inside public/) — recommend copying this file into public/assets for proper serving */}
+                  <PdfModal pdfPath="/assets/vandedantoc.pdf" triggerText="Vấn đề dân tộc" title="Vấn đề dân tộc và thuộc địa" compact />
+                </span>
+              </p>
             </Section>
 
             <Section id="s32" title="3.2. Tư tưởng về CNXH và xây dựng CNXH ở Việt Nam" media="/assets/sec_32_people.jpg" flip>
@@ -256,6 +264,8 @@ function App() {
           </div>
         </div>
       </main>
+
+          <ChatBox />
 
       <Footer />
     </LazyMotion>
