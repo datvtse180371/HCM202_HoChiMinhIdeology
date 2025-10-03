@@ -374,7 +374,7 @@ main {
   background: var(--gradient-accent);
   color: #0a0e13; 
   font-weight: 700;
-  box-shadow: 0 0 30px rgba(255,209,102,.8); 
+  shadow: 0 0 30px rgba(255,209,102,.8); 
   position: relative;
   overflow: hidden;
 }
@@ -749,111 +749,4 @@ main {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
-}
-
-/* PDF button group spacing used inline inside paragraphs */
-.pdf-buttons {
-  display: inline-flex;
-  gap: 8px;
-  margin-left: 10px;
-  vertical-align: middle;
-}
-
-/* Compact inline button variant for citations */
-.btn--inline {
-  padding: 6px 10px;
-  font-size: 0.85rem;
-  border-radius: 8px;
-  white-space: nowrap;
-  line-height: 1;
-  min-width: 0;
-}
-
-/* ChatBox styles */
-.chatbox {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  width: 360px;
-  max-width: calc(100vw - 48px);
-  /* reduce transparency for readability; fall back to solid colors if vars are undefined */
-  background: rgba(10,14,19,0.94); /* near-opaque dark panel */
-  background: var(--glass-bg-solid, rgba(10,14,19,0.94));
-  border: 1px solid rgba(255,255,255,0.06);
-  border: 1px solid var(--glass-border, rgba(255,255,255,0.06));
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(3,8,18,0.6);
-  overflow: hidden;
-  z-index: 10050;
-  display: flex;
-  flex-direction: column;
-}
-
-.chatbox--collapsed { width: 140px; height: 48px; }
-
-.chatbox__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
-  border-bottom: 1px solid var(--glass-border);
-}
-
-/* When collapsed, make the header compact and center the action so there's no stray space */
-.chatbox--collapsed .chatbox__header {
-  padding: 6px 8px;
-  justify-content: center;
-}
-.chatbox--collapsed .chatbox__title { display: none; }
-.chatbox--collapsed .chatbox__actions { margin-left: 0; }
-.chatbox--collapsed .chatbox__actions .btn {
-  padding: 8px 12px;
-  width: 100%;
-  text-align: center;
-  font-size: 1.05rem;
-  font-weight: 800;
-  line-height: 1;
-  transition: transform .12s ease;
-}
-.chatbox--collapsed .chatbox__actions .btn:hover { transform: scale(1.03); }
-
-.chatbox__title { font-weight: 800; color: var(--text); font-size: 1.02rem; letter-spacing: 0.2px; }
-
-.chatbox__list {
-  max-height: 300px;
-  overflow: auto;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.chatbox__message { display: flex; }
-.chatbox__message.is-user { justify-content: flex-end; }
-.chatbox__message.is-bot { justify-content: flex-start; }
-
-.chatbox__bubble {
-  max-width: 78%;
-  padding: 10px 12px;
-  border-radius: 12px;
-  /* Use a slightly translucent but readable background for bot messages */
-  background: rgba(255,255,255,0.06);
-  background: var(--bubble-bg, rgba(255,255,255,0.06));
-  color: var(--text, #e6eef8);
-  line-height: 1.35;
-}
-.chatbox__message.is-user .chatbox__bubble {
-  background: linear-gradient(90deg, var(--accent, #7dd3fc) 0%, var(--primary, #60a5fa) 100%);
-  color: var(--text-on-accent, #041025);
-}
-.chatbox__sender { font-size: 0.75rem; font-weight: 700; margin-bottom: 6px; opacity: 0.9; }
-.chatbox__text { white-space: pre-wrap; }
-
-.chatbox__composer { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--glass-border); align-items: center; }
-.chatbox__input { flex: 1; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: transparent; color: var(--text); min-height: 44px; resize: vertical; }
-.chatbox__controls { display: flex; gap: 8px; }
-
-@media (max-width: 720px) {
-  .chatbox { right: 12px; left: 12px; width: auto; }
 }

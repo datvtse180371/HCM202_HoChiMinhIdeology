@@ -91,25 +91,7 @@ export default function Header(){
           ))}
         </nav>
 
-        {/* Mobile Menu Button */}
-        {isMobileView && (
-        <motion.button 
-          className="mobile-menu-toggle nav--mobile"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          whileTap={{ scale: 0.9 }}
-          aria-label="Toggle menu"
-        >
-          <motion.div
-            className="hamburger"
-            animate={{ rotate: isMobileMenuOpen ? 45 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <span className={`line ${isMobileMenuOpen ? 'line--active' : ''}`}></span>
-            <span className={`line ${isMobileMenuOpen ? 'line--active' : ''}`}></span>
-            <span className={`line ${isMobileMenuOpen ? 'line--active' : ''}`}></span>
-          </motion.div>
-        </motion.button>
-        )}
+        {/* Mobile Menu Button removed */}
       </div>
 
       {/* Mobile Menu */}
