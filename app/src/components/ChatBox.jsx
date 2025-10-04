@@ -9,6 +9,9 @@ export default function ChatBox() {
     const [collapsed, setCollapsed] = useState(false);
     const listRef = useRef(null);
     const textareaRef = useRef(null);
+    // Read backend URL from Vite env var (useful for deployment).
+    // Vercel: set VITE_CHAT_API_URL to https://hcm202-hochiminhideology.onrender.com
+    const API_BASE = import.meta.env.VITE_CHAT_API_URL || 'https://hcm202-hochiminhideology.onrender.com';
 
     // autoscroll when messages change
     useEffect(() => {
@@ -41,14 +44,18 @@ export default function ChatBox() {
         setSending(true);
 
         try {
-            const resp = await fetch("http://localhost:5000/chat", {
+            const resp = await fetch(`${API_BASE}/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ message: text }),
+                // ensure CORS-enabled endpoints work as expected
+                mode: 'cors'
             });
+            if (!resp.ok) throw new Error(`Server responded ${resp.status}`);
             const data = await resp.json();
             setMessages(m => [...m, { sender: "bot", text: data.reply }]);
         } catch (err) {
+            console.error('Chat error:', err);
             setMessages(m => [...m, { sender: "bot", text: "Lỗi kết nối tới server." }]);
         } finally {
             setSending(false);
